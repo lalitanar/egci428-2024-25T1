@@ -43,22 +43,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     class MyCustomAdapter(context:Context): BaseAdapter() {
-        private val wordList = arrayListOf<String>("ant", "bat", "cat", "dog",
-            "elephant", "fox", "ant", "bat", "cat", "dog",
-            "elephant", "fox", "ant", "bat", "cat", "dog",
-            "elephant", "fox")
+        private val dayList = arrayListOf<String>("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+        private val colorDays = arrayListOf<String>("#FCF3CF", "#F5EEF8", "#D4EFDF", "#FDEBD0", "#D6EAF8", "#E8DAEF", "#F2D7D5")
+        private val noWeeks: Int = 7
+
+
         private val mContext:Context
         init {
             mContext = context
         }
 
-
+       fun insert(string) {
+            wordList.add("")
+           notifyDataSetChanged()
+        }
         override fun getCount(): Int {
-            return wordList.size
+            return dayList.size*7
         }
 
         override fun getItem(position: Int): Any {
-            return wordList[position]
+            return dayList[position%7]
         }
 
         override fun getItemId(position: Int): Long {
@@ -82,21 +86,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             val viewHolder = aRow.tag as ViewHolder
-            viewHolder.nameTextView.text = wordList[position]
+            viewHolder.nameTextView.text = dayList[position%7]
             viewHolder.positionTextView.text = "position: "+position.toString()
 
-            if(position%2==0) {
-                aRow.setBackgroundColor(Color.parseColor("#FFFFFF"))
-            } else {
-                aRow.setBackgroundColor(Color.parseColor("#E0E0E0"))
-            }
+            //if(position%7==0) {
+                aRow.setBackgroundColor(Color.parseColor(colorDays[position%7]))
+            //}
+//            } else {
+//                aRow.setBackgroundColor(Color.parseColor("#E0E0E0"))
+//            }
 
 
             aRow.setOnClickListener {
 
                 aRow.animate().setDuration(1500).alpha(0F).withEndAction(
                     Runnable {
-                        wordList.removeAt(position)
+                        dayList.removeAt(position)
                         notifyDataSetChanged()
                         aRow.alpha = 1.0F
                     }

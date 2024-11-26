@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ex25_googleAuth</string>
+    <string name="default_web_client_id">000000000000000000000.apps.googleusercontent.com</string>
+</resources>
